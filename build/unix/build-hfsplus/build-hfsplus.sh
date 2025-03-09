@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/nix/store/11ciq72n4fdv8rw6wgjgasfv4mjs1jrw-bash-5.2p37/bin/bash
 
 # hfsplus needs to be rebuilt when changing the clang version used to build it.
 # Until bug 1471905 is addressed, increase the following number

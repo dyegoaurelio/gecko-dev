@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/nix/store/11ciq72n4fdv8rw6wgjgasfv4mjs1jrw-bash-5.2p37/bin/bash
 # this script creates a wrapper shell script for an executable.  The idea is the actual executable cannot be
 # executed natively (it was cross compiled), but we want to run tests natively.  Running this script
 # as part of the compilation process will move the non-native executable to a new location, and replace it
