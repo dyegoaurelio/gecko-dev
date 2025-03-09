@@ -279,6 +279,7 @@ class nsWindow final : public nsBaseWidget {
                                guint aTime, gpointer aData);
   gboolean OnPropertyNotifyEvent(GtkWidget* aWidget, GdkEventProperty* aEvent);
   gboolean OnTouchEvent(GdkEventTouch* aEvent);
+  gboolean OnTouchpadSwipeEvent(GdkEventTouchpadSwipe* aEvent);
   gboolean OnTouchpadPinchEvent(GdkEventTouchpadPinch* aEvent);
   void OnTouchpadHoldEvent(GdkTouchpadGesturePhase aPhase, guint aTime,
                            uint32_t aFingers);

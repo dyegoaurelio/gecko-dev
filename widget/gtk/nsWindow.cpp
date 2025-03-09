@@ -5437,6 +5437,10 @@ bool nsWindow::IsHandlingTouchSequence(GdkEventSequence* aSequence) {
   return mHandleTouchEvent && mTouches.Contains(aSequence);
 }
 
+gboolean nsWindow::OnTouchpadSwipeEvent(GdkEventTouchpadSwipe* aEvent) {
+  return FALSE;
+}
+
 gboolean nsWindow::OnTouchpadPinchEvent(GdkEventTouchpadPinch* aEvent) {
   if (!StaticPrefs::apz_gtk_touchpad_pinch_enabled()) {
     return TRUE;
@@ -8212,20 +8216,36 @@ static gboolean touch_event_cb(GtkWidget* aWidget, GdkEventTouch* aEvent) {
 // This function called generic because there is no signal specific to touchpad
 // pinch events.
 static gboolean generic_event_cb(GtkWidget* widget, GdkEvent* aEvent) {
-  if (aEvent->type != GDK_TOUCHPAD_PINCH) {
+  if (aEvent->type != GDK_TOUCHPAD_PINCH &&
+      aEvent->type != GDK_TOUCHPAD_SWIPE) {
     return FALSE;
   }
-  // Using reinterpret_cast because the touchpad_pinch field of GdkEvent is not
-  // available in GTK+ versions lower than v3.18
-  GdkEventTouchpadPinch* event =
-      reinterpret_cast<GdkEventTouchpadPinch*>(aEvent);
+
+  if (aEvent->type == GDK_TOUCHPAD_PINCH) {
+    // Using reinterpret_cast because the touchpad_pinch field of GdkEvent is
+    // not available in GTK+ versions lower than v3.18
+    GdkEventTouchpadPinch* event =
+        reinterpret_cast<GdkEventTouchpadPinch*>(aEvent);
+
+    RefPtr<nsWindow> window = get_window_for_gdk_window(event->window);
+
+    if (!window) {
+      return FALSE;
+    }
+    return window->OnTouchpadPinchEvent(event);
+  }
+
+  // Using reinterpret_cast because the touchpad_swipe field of GdkEvent is
+  // not available in GTK+ versions lower than v3.18
+  GdkEventTouchpadSwipe* event =
+      reinterpret_cast<GdkEventTouchpadSwipe*>(aEvent);
 
   RefPtr<nsWindow> window = get_window_for_gdk_window(event->window);
 
   if (!window) {
     return FALSE;
   }
-  return window->OnTouchpadPinchEvent(event);
+  return window->OnTouchpadSwipeEvent(event);
 }
 
 void nsWindow::GtkWidgetDestroyHandler(GtkWidget* aWidget) {
