@@ -5438,7 +5438,30 @@ bool nsWindow::IsHandlingTouchSequence(GdkEventSequence* aSequence) {
 }
 
 gboolean nsWindow::OnTouchpadSwipeEvent(GdkEventTouchpadSwipe* aEvent) {
-  return FALSE;
+  if (!mWidgetListener) {
+    return FALSE;
+  }
+
+
+  EventMessage msg;
+  switch (aEvent->phase) {
+    case GDK_TOUCHPAD_GESTURE_PHASE_BEGIN:
+      msg = eSwipeGestureMayStart;
+      break;
+    case GDK_TOUCHPAD_GESTURE_PHASE_UPDATE:
+      msg = eSwipeGestureUpdate;
+      break;
+    case GDK_TOUCHPAD_GESTURE_PHASE_END:
+      msg = eSwipeGestureEnd;
+      break;
+    default:
+      msg = eSwipeGestureEnd;
+      break;
+  }
+  WidgetSimpleGestureEvent event(true, msg, this);
+
+  DispatchInputEvent(&event);
+  return TRUE;
 }
 
 gboolean nsWindow::OnTouchpadPinchEvent(GdkEventTouchpadPinch* aEvent) {

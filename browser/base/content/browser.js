@@ -7652,3 +7652,15 @@ var FirefoxViewHandler = {
     }
   },
 };
+
+window.addEventListener("MozSwipeGestureMayStart", (event) => {
+  console.log("here: Swipe may start!", event);
+});
+
+window.addEventListener("MozSwipeGestureUpdate", (event) => {
+  console.log("here: Swipe in progress!", event);
+});
+
+window.addEventListener("MozSwipeGestureEnd", (event) => {
+  console.log("here: Swipe ended!", event);
+});
