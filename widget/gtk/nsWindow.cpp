@@ -5468,10 +5468,8 @@ gboolean nsWindow::OnTouchpadPinchEvent(GdkEventTouchpadPinch* aEvent) {
   if (!StaticPrefs::apz_gtk_touchpad_pinch_enabled()) {
     return TRUE;
   }
-  // Do not respond to pinch gestures involving more than two fingers
-  // unless specifically preffed on. These are sometimes hooked up to other
-  // actions at the desktop environment level and having the browser also
-  // pinch can be undesirable.
+  // I'll want to handle my gesture here.
+  // gtk considers two fingers hold + 1 swipe as a pinch gesture.
   if (aEvent->n_fingers > 2 &&
       !StaticPrefs::apz_gtk_touchpad_pinch_three_fingers_enabled()) {
     return FALSE;
