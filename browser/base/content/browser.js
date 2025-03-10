@@ -7654,13 +7654,16 @@ var FirefoxViewHandler = {
 };
 
 window.addEventListener("MozSwipeGestureMayStart", (event) => {
-  console.log("here: Swipe may start!", event);
+  // this sets the active tab to the last one
+  gBrowser.selectTabAtIndex(-1, event)
 });
 
 window.addEventListener("MozSwipeGestureUpdate", (event) => {
-  console.log("here: Swipe in progress!", event);
+  // this sets the active tab to the last one
+  gBrowser.selectTabAtIndex(-1, event)
 });
 
 window.addEventListener("MozSwipeGestureEnd", (event) => {
-  console.log("here: Swipe ended!", event);
+  // this sets the active tab to the last one
+  gBrowser.selectTabAtIndex(-1, event)
 });
