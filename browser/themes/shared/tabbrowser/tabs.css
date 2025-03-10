@@ -238,6 +238,21 @@
       --tab-min-width: 100px;
     }
   }
+
+
+  &:not([sliding]) .tab-sliding-marker {
+    display: none;
+  }
+
+  &:is([sliding]) .tab-sliding-marker {
+    background-color: red;
+    height: 100%;
+    width: 5px;
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    margin-left: var(--sliding-percentage);
+  }
 }
 
 .tab-content {
