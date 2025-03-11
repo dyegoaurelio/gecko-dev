@@ -617,6 +617,8 @@ class PinchGestureInput : public InputData {
 class TabSwipeGestureInput : public InputData {
  protected:
  public:
+  TabSwipeGestureInput();
+
   WidgetWheelEvent ToWidgetEvent(nsIWidget* aWidget) const;
 };
 
