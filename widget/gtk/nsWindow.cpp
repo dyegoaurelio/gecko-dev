@@ -5437,16 +5437,19 @@ bool nsWindow::IsHandlingTouchSequence(GdkEventSequence* aSequence) {
   return mHandleTouchEvent && mTouches.Contains(aSequence);
 }
 
+static gboolean handle_tab_swipe_gesture_input(nsWindow* targetWindow,
+                                               GdkEventTouchpadPinch* aEvent) {
+  return FALSE;
+}
+
 gboolean nsWindow::OnTouchpadPinchEvent(GdkEventTouchpadPinch* aEvent) {
   if (!StaticPrefs::apz_gtk_touchpad_pinch_enabled()) {
     return TRUE;
   }
-  // I'll want to handle my gesture here.
-  // gtk considers two fingers hold + 1 swipe as a pinch gesture.
-  if (aEvent->n_fingers > 2 &&
-      !StaticPrefs::apz_gtk_touchpad_pinch_three_fingers_enabled()) {
-    return FALSE;
+  if (aEvent->n_fingers > 2) {
+    return handle_tab_swipe_gesture_input(this, aEvent);
   }
+
   auto pinchGestureType = PinchGestureInput::PINCHGESTURE_SCALE;
   ScreenCoord currentSpan;
   ScreenCoord previousSpan;
