@@ -5439,8 +5439,15 @@ bool nsWindow::IsHandlingTouchSequence(GdkEventSequence* aSequence) {
 
 static gboolean handle_tab_swipe_gesture_input(nsWindow* targetWindow,
                                                GdkEventTouchpadPinch* aEvent) {
-  TabSwipeGestureInput event;
-  targetWindow -> DispatchTabSwipeGestureInput(event);
+
+  EventMessage msg = eSwipeGestureUpdate;
+
+  WidgetSimpleGestureEvent event(true, msg, targetWindow);
+
+  event.mTimeStamp = targetWindow -> GetEventTimeStamp(aEvent->time);
+  event.mDelta = aEvent->dx;
+
+  targetWindow->DispatchInputEvent(&event);
   return TRUE;
 }
 

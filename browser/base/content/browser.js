@@ -7653,17 +7653,9 @@ var FirefoxViewHandler = {
   },
 };
 
-window.addEventListener("MozSwipeGestureMayStart", (event) => {
-  // this sets the active tab to the last one
-  gBrowser.visibleTabs[0].setAttribute("sliding", true);
-});
-
 window.addEventListener("MozSwipeGestureUpdate", (event) => {
   // this sets the active tab to the last one
   gBrowser.visibleTabs[0].setAttribute("sliding", true);
+  console.log("swipe gesture update", event);
 });
 
-window.addEventListener("MozSwipeGestureEnd", (event) => {
-  // this sets the active tab to the last one
-  gBrowser.visibleTabs[0].setAttribute("sliding", true);
-});
