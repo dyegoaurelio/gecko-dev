@@ -7656,6 +7656,10 @@ var FirefoxViewHandler = {
 window.addEventListener("MozSwipeGestureUpdate", (event) => {
   // this sets the active tab to the last one
   gBrowser.visibleTabs[0].setAttribute("sliding", true);
-  console.log("swipe gesture update", event);
+  console.debug("swipe gesture update", event);
 });
 
+window.addEventListener("MozSwipeGestureEnd", (event) => {
+  console.log("swipe gesture end", event);
+  gBrowser.visibleTabs[0].removeAttribute("sliding");
+});

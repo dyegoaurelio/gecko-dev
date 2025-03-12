@@ -5439,7 +5439,6 @@ bool nsWindow::IsHandlingTouchSequence(GdkEventSequence* aSequence) {
 
 static gboolean handle_tab_swipe_gesture_input(nsWindow* targetWindow,
                                                GdkEventTouchpadPinch* aEvent) {
-
   EventMessage msg;
 
   switch (aEvent->phase) {
@@ -5458,7 +5457,7 @@ static gboolean handle_tab_swipe_gesture_input(nsWindow* targetWindow,
 
   WidgetSimpleGestureEvent event(true, msg, targetWindow);
 
-  event.mTimeStamp = targetWindow -> GetEventTimeStamp(aEvent->time);
+  event.mTimeStamp = targetWindow->GetEventTimeStamp(aEvent->time);
   event.mDelta = aEvent->dx;
 
   targetWindow->DispatchInputEvent(&event);
@@ -5511,6 +5510,9 @@ gboolean nsWindow::OnTouchpadPinchEvent(GdkEventTouchpadPinch* aEvent) {
     default:
       return FALSE;
   }
+
+  WidgetSimpleGestureEvent tabSwipeEvent(true, eSwipeGestureEnd, this);
+  DispatchInputEvent(&tabSwipeEvent);
 
   PinchGestureInput event(
       pinchGestureType, PinchGestureInput::TRACKPAD,
