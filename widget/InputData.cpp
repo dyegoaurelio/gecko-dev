@@ -630,8 +630,6 @@ PinchGestureInput::PinchGestureInput()
       mSource(UNKNOWN),
       mHandledByAPZ(false) {}
 
-TabSwipeGestureInput::TabSwipeGestureInput() : InputData(PINCHGESTURE_INPUT) {}
-
 PinchGestureInput::PinchGestureInput(
     PinchGestureType aType, PinchGestureSource aSource, TimeStamp aTimeStamp,
     const ExternalPoint& aScreenOffset, const ScreenPoint& aFocusPoint,
@@ -654,11 +652,6 @@ bool PinchGestureInput::TransformToLocal(
   }
   mLocalFocusPoint = *point;
   return true;
-}
-
-WidgetWheelEvent TabSwipeGestureInput::ToWidgetEvent(nsIWidget* aWidget) const {
-  WidgetWheelEvent wheelEvent(true, eWheel, aWidget);
-  return wheelEvent;
 }
 
 WidgetWheelEvent PinchGestureInput::ToWidgetEvent(nsIWidget* aWidget) const {
