@@ -7653,10 +7653,58 @@ var FirefoxViewHandler = {
   },
 };
 
+let currentTabSwipe = null;
+
+
+function getTabAtIndex(aIndex){
+  let tabs = gBrowser.visibleTabs;
+
+  // count backwards for aIndex < 0
+  if (aIndex < 0) {
+    aIndex += tabs.length;
+    // clamp at index 0 if still negative.
+    if (aIndex < 0) {
+      aIndex = 0;
+    }
+  } else if (aIndex >= tabs.length) {
+    // clamp at right-most tab if out of range.
+    aIndex = tabs.length - 1;
+  }
+
+  return tabs[aIndex];
+}
+
+
+function handleTabSwipe(dx){
+  if (currentTabSwipe === null) {
+    currentTabSwipe = {
+      tabOffset: 0,
+      slidePercentage: 0.5
+    };
+  }
+
+
+  currentTabSwipe.slidePercentage += dx / 50;
+
+  if (currentTabSwipe.slidePercentage > 1) {
+    currentTabSwipe.slidePercentage = 0;
+    getTabAtIndex(currentTabSwipe.tabOffset).removeAttribute("sliding");
+    currentTabSwipe.tabOffset += 1;
+  } else if (currentTabSwipe.slidePercentage < 0) {
+    currentTabSwipe.slidePercentage = 1;
+    getTabAtIndex(currentTabSwipe.tabOffset).removeAttribute("sliding");
+    currentTabSwipe.tabOffset -= 1;
+  }
+
+  const tab = getTabAtIndex(currentTabSwipe.tabOffset);
+  tab.style.setProperty("--sliding-percentage", `${currentTabSwipe.slidePercentage * 100}%`);
+  tab.setAttribute("sliding", true);
+}
+
+
+
 window.addEventListener("MozSwipeGestureUpdate", (event) => {
-  // this sets the active tab to the last one
-  gBrowser.visibleTabs[0].setAttribute("sliding", true);
-  console.debug("swipe gesture update", event);
+  handleTabSwipe(event.delta);
 });
 
 window.addEventListener("MozSwipeGestureEnd", (event) => {
