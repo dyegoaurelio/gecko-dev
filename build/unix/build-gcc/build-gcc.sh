@@ -1,4 +1,4 @@
-#!/nix/store/11ciq72n4fdv8rw6wgjgasfv4mjs1jrw-bash-5.2p37/bin/bash
+#!/bin/bash
 
 set -e
 set -x

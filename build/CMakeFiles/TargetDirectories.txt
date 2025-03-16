@@ -1,9 +1,0 @@
-/home/dyego/coding/random/mozilla-central/build/CMakeFiles/freetype.dir
-/home/dyego/coding/random/mozilla-central/build/CMakeFiles/package.dir
-/home/dyego/coding/random/mozilla-central/build/CMakeFiles/package_source.dir
-/home/dyego/coding/random/mozilla-central/build/CMakeFiles/edit_cache.dir
-/home/dyego/coding/random/mozilla-central/build/CMakeFiles/rebuild_cache.dir
-/home/dyego/coding/random/mozilla-central/build/CMakeFiles/list_install_components.dir
-/home/dyego/coding/random/mozilla-central/build/CMakeFiles/install.dir
-/home/dyego/coding/random/mozilla-central/build/CMakeFiles/install/local.dir
-/home/dyego/coding/random/mozilla-central/build/CMakeFiles/install/strip.dir

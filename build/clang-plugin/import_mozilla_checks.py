@@ -1,4 +1,4 @@
-#!/nix/store/26yi95240650jxp5dj78xzch70i1kzlz-python3-3.12.9/bin/python3
+#!/usr/bin/python3
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.

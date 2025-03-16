@@ -1,4 +1,4 @@
-#!/nix/store/26yi95240650jxp5dj78xzch70i1kzlz-python3-3.12.9/bin/python3
+#!/usr/bin/env python3
 
 # If you want to use a custom linker with Cargo, Cargo requires that you
 # specify it in Cargo.toml or via the matching environment variable.
