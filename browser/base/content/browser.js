@@ -7686,17 +7686,20 @@ function handleTabSwipe(dx){
 
   currentTabSwipe.slidePercentage += dx / 50;
 
+  const currentSelectedTabIdx = gBrowser.selectedTab._tPos;
+
+
   if (currentTabSwipe.slidePercentage > 1) {
     currentTabSwipe.slidePercentage = 0;
-    getTabAtIndex(currentTabSwipe.tabOffset).removeAttribute("sliding");
+    getTabAtIndex(currentTabSwipe.tabOffset + currentSelectedTabIdx).removeAttribute("sliding");
     currentTabSwipe.tabOffset += 1;
   } else if (currentTabSwipe.slidePercentage < 0) {
     currentTabSwipe.slidePercentage = 1;
-    getTabAtIndex(currentTabSwipe.tabOffset).removeAttribute("sliding");
+    getTabAtIndex(currentTabSwipe.tabOffset + currentSelectedTabIdx).removeAttribute("sliding");
     currentTabSwipe.tabOffset -= 1;
   }
 
-  const tab = getTabAtIndex(currentTabSwipe.tabOffset);
+  const tab = getTabAtIndex(currentTabSwipe.tabOffset + currentSelectedTabIdx);
   tab.style.setProperty("--sliding-percentage", `${currentTabSwipe.slidePercentage * 100}%`);
   tab.setAttribute("sliding", true);
 }
@@ -7708,6 +7711,10 @@ window.addEventListener("MozSwipeGestureUpdate", (event) => {
 });
 
 window.addEventListener("MozSwipeGestureEnd", (event) => {
-  console.log("swipe gesture end", event);
-  gBrowser.visibleTabs[0].removeAttribute("sliding");
+  handleTabSwipe(event.delta);
+  const selectedSwipeIdx = currentTabSwipe.tabOffset + gBrowser.selectedTab._tPos;
+  currentTabSwipe = null;
+  getTabAtIndex(selectedSwipeIdx).removeAttribute("sliding");
+
+  gBrowser.selectTabAtIndex(selectedSwipeIdx);
 });
