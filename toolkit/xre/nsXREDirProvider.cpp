@@ -11,7 +11,6 @@
 
 #include "jsapi.h"
 #include "xpcpublic.h"
-#include "prenv.h"
 #include "prprf.h"
 
 #include "nsIAppStartup.h"
@@ -298,8 +297,7 @@ static nsresult GetSystemParentDirectory(nsIFile** aFile) {
       "/usr/lib/mozilla"_ns
 #    endif
       ;
-  const char* pathVar = PR_GetEnv("MOZ_SYSTEM_DIR");
-  rv = NS_NewNativeLocalFile((pathVar && *pathVar) ? nsDependentCString(pathVar) : reinterpret_cast<const nsCString&>(dirname), getter_AddRefs(localDir));
+  rv = NS_NewNativeLocalFile(dirname, getter_AddRefs(localDir));
 #  endif
 
   if (NS_SUCCEEDED(rv)) {
