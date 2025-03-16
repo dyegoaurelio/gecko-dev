@@ -634,6 +634,7 @@ class nsBaseWidget : public nsIWidget, public nsSupportsWeakReference {
    */
   void DispatchPanGestureInput(mozilla::PanGestureInput& aInput);
   void DispatchPinchGestureInput(mozilla::PinchGestureInput& aInput);
+
   static bool ConvertStatus(nsEventStatus aStatus) {
     return aStatus == nsEventStatus_eConsumeNoDefault;
   }
